@@ -24,7 +24,8 @@ class InvestAdapter : BaseAdapter<InvestResultUiModel>() {
                     listOf(
                         Entry(10f, item.x2.toFloat()),
                         Entry(40f, item.x3.toFloat()),
-                        Entry(60f, item.x4.toFloat()),
+                        Entry(70f, item.x4.toFloat()),
+                        Entry(100f, item.x5.toFloat()),
                     )
                 )
                 executePendingBindings()
@@ -67,7 +68,7 @@ class InvestAdapter : BaseAdapter<InvestResultUiModel>() {
                     set1.formLineWidth = 1f
                     set1.formLineDashEffect = DashPathEffect(floatArrayOf(10f, 5f), 0f)
                     set1.formSize = 5f
-                    set1.valueTextSize = 15f
+                    set1.valueTextSize = 8f
 
 
                     set1.setFillColor(Color.BLACK)
@@ -79,7 +80,6 @@ class InvestAdapter : BaseAdapter<InvestResultUiModel>() {
             }
         }
     }
-
 
 
     override fun onCreate(

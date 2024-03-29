@@ -8,6 +8,7 @@ import com.bashirli.algoritmatask.common.utils.gone
 import com.bashirli.algoritmatask.common.utils.showMotionToast
 import com.bashirli.algoritmatask.common.utils.visible
 import com.bashirli.algoritmatask.databinding.FragmentHomeBinding
+import com.bashirli.algoritmatask.presentation.sharedViewModel.NetworkSharedUiModel
 import com.bashirli.algoritmatask.presentation.sharedViewModel.NetworkSharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import www.sanju.motiontoast.MotionToastStyle
@@ -44,10 +45,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         is HomeUiState.InvestData -> {
                             progressBar.gone()
                             adapter.submitData(it.data.result)
+                            viewModel.updateDatabase(it.data.result)
                         }
 
                         HomeUiState.Loading -> {
                             progressBar.visible()
+                        }
+
+                        is HomeUiState.OfflineData -> {
+                            progressBar.gone()
+                            adapter.submitData(it.data)
+                        }
+
+                        HomeUiState.DatabaseEdit -> progressBar.gone()
+                    }
+                }
+            }
+            sharedViewModel.state.observe(viewLifecycleOwner) {
+                when (it) {
+                    is NetworkSharedUiModel.IsOnline -> {
+                        if (!it.isOnline) {
+                            viewModel.getOfflineData()
                         }
                     }
                 }
