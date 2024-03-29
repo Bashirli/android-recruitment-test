@@ -76,7 +76,7 @@ dependencies {
     //Okhttp & Chucker & Socket io
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("io.socket:socket.io-client:2.1.0")
+    implementation("io.socket:socket.io-client:1.0.2")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
 
@@ -99,6 +99,9 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.15.1")
     kapt("com.github.bumptech.glide:compiler:4.15.1")
+
+    //MotionToast
+    implementation("com.github.Spikeysanju:MotionToast:1.4")
 
 
 }
