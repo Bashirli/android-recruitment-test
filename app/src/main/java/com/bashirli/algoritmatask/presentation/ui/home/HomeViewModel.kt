@@ -14,6 +14,8 @@ class HomeViewModel @Inject constructor(
     private val useCase: RemoteUseCase
 ) : BaseViewModel<HomeUiState>() {
 
+    private var isErrorMessageSame = false
+
     init {
         connectSocket()
     }
@@ -22,6 +24,8 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             useCase.connectSocket().handleResult(
                 onComplete = {
+                    isErrorMessageSame = false
+                    setState(HomeUiState.IsOnline(it))
                     if (it) {
                         receiveSocket()
                     } else {
@@ -32,28 +36,47 @@ class HomeViewModel @Inject constructor(
                     setState(HomeUiState.Loading)
                 },
                 onError = {
-                    setState(HomeUiState.Error(it.localizedMessage as String))
+                    if (!isErrorMessageSame) {
+                        setState(
+                            HomeUiState.Error(
+                                it.localizedMessage as String,
+                                isErrorMessageSame
+                            )
+                        )
+                        setState(HomeUiState.IsOnline(false))
+                        isErrorMessageSame = true
+                    }
                 }
             )
         }
     }
 
-    fun receiveSocket() {
+    private fun receiveSocket() {
         viewModelScope.launch {
             useCase.receiveSocket().handleResult(
                 onComplete = {
                     setState(HomeUiState.InvestData(it))
                 },
                 onLoading = {
-
                 },
                 onError = {
-                    setState(HomeUiState.Error(it.localizedMessage as String))
+                    isErrorMessageSame = false
+                    setState(HomeUiState.Error(it.localizedMessage as String, isErrorMessageSame))
                 }
             )
         }
     }
 
+    private fun disconnect() {
+        viewModelScope.launch {
+            useCase.disconnectSocket()
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disconnect()
+    }
 
 }
 
@@ -61,7 +84,9 @@ sealed class HomeUiState : State {
 
     data object Loading : HomeUiState()
 
-    data class Error(val message: String) : HomeUiState()
+    data class Error(val message: String, val isSame: Boolean) : HomeUiState()
+
+    data class IsOnline(val isOnline: Boolean) : HomeUiState()
 
     data class InvestData(val data: InvestUiModel) : HomeUiState()
 

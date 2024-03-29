@@ -103,5 +103,8 @@ dependencies {
     //MotionToast
     implementation("com.github.Spikeysanju:MotionToast:1.4")
 
+    //chart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 
 }

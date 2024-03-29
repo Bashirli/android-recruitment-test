@@ -1,5 +1,6 @@
 package com.bashirli.algoritmatask.presentation.ui.home
 
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bashirli.algoritmatask.R
 import com.bashirli.algoritmatask.common.base.BaseFragment
@@ -7,6 +8,7 @@ import com.bashirli.algoritmatask.common.utils.gone
 import com.bashirli.algoritmatask.common.utils.showMotionToast
 import com.bashirli.algoritmatask.common.utils.visible
 import com.bashirli.algoritmatask.databinding.FragmentHomeBinding
+import com.bashirli.algoritmatask.presentation.sharedViewModel.NetworkSharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import www.sanju.motiontoast.MotionToastStyle
 
@@ -14,6 +16,8 @@ import www.sanju.motiontoast.MotionToastStyle
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val viewModel by viewModels<HomeViewModel>()
+    private val sharedViewModel by activityViewModels<NetworkSharedViewModel>()
+    private val adapter = InvestAdapter()
 
     override fun onViewCreateFinish() {
         setup()
@@ -33,8 +37,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             )
                         }
 
+                        is HomeUiState.IsOnline -> {
+                            sharedViewModel.setNetworkState(it.isOnline)
+                        }
+
                         is HomeUiState.InvestData -> {
                             progressBar.gone()
+                            adapter.submitData(it.data.result)
                         }
 
                         HomeUiState.Loading -> {
@@ -47,7 +56,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setup() {
+        setRV()
+    }
 
+    private fun setRV() {
+        with(binding) {
+            rvData.adapter = adapter
+
+            rvData.itemAnimator = null
+        }
     }
 
 }
