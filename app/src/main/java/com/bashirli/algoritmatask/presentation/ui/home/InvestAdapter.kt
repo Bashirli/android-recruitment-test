@@ -22,10 +22,10 @@ class InvestAdapter : BaseAdapter<InvestResultUiModel>() {
                 data = item
                 setChart(
                     listOf(
-                        Entry(10f, item.x2.toFloat()),
-                        Entry(40f, item.x3.toFloat()),
-                        Entry(70f, item.x4.toFloat()),
-                        Entry(100f, item.x5.toFloat()),
+                        Entry(10f, item.valueOne.toFloatOrNull() ?: 0f),
+                        Entry(40f, item.valueTwo.toFloatOrNull() ?: 0f),
+                        Entry(70f, item.valueThree.toFloatOrNull() ?: 0f),
+                        Entry(100f, item.valueFour.toFloatOrNull() ?: 0f),
                     )
                 )
                 executePendingBindings()

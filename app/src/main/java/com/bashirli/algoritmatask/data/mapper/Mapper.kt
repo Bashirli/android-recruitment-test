@@ -7,14 +7,14 @@ import com.bashirli.algoritmatask.domain.model.InvestResultUiModel
 import com.bashirli.algoritmatask.domain.model.InvestUiModel
 
 fun Result?.toResultUiModel() = InvestResultUiModel(
-    x0 = this?.x0.orEmpty(),
-    x1 = this?.x1.orEmpty(),
-    x2 = this?.x2.orEmpty(),
-    x3 = this?.x3.orEmpty(),
-    x4 = this?.x4.orEmpty(),
-    x5 = this?.x5.orEmpty(),
+    status = this?.x0.orEmpty(),
+    name = this?.x1.orEmpty(),
+    valueOne = this?.x2.orEmpty(),
+    valueTwo = this?.x3.orEmpty(),
+    valueThree = this?.x4.orEmpty(),
+    valueFour = this?.x5.orEmpty(),
     x6 = this?.x6 ?: -1,
-    x7 = this?.x7.orEmpty(),
+    date = this?.x7.orEmpty(),
 )
 
 fun List<Result?>?.toListResultUiModel() = this?.mapNotNull {
@@ -28,25 +28,25 @@ fun InvestDTO?.toInvestUiModel() = InvestUiModel(
 
 
 fun InvestEntity.toInvestLocalUiModel() = InvestResultUiModel(
-    x0 = x0.orEmpty(),
-    x1 = x1.orEmpty(),
-    x2 = x2.orEmpty(),
-    x3 = x3.orEmpty(),
-    x4 = x4.orEmpty(),
-    x5 = x5.orEmpty(),
+    status = status.orEmpty(),
+    name = name.orEmpty(),
+    valueOne = valueOne.orEmpty(),
+    valueTwo = valueTwo.orEmpty(),
+    valueThree = valueThree.orEmpty(),
+    valueFour = valueFour.orEmpty(),
     x6 = x6 ?: -1,
-    x7 = x7.orEmpty(),
+    date = date.orEmpty(),
 )
 
 fun InvestResultUiModel.toInvestEntity(id: Int) = InvestEntity(
-    x0 = x0,
-    x1 = x1,
-    x2 = x2,
-    x3 = x3,
-    x4 = x4,
-    x5 = x5,
+    status = status,
+    name = name,
+    valueOne = valueOne,
+    valueTwo = valueTwo,
+    valueThree = valueThree,
+    valueFour = valueFour,
     x6 = x6,
-    x7 = x7,
+    date = date,
     _id = id
 )
 

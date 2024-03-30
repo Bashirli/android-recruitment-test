@@ -1,12 +1,12 @@
 package com.bashirli.algoritmatask.domain.model
 
 data class InvestResultUiModel(
-    val x0: String,
-    val x1: String,
-    val x2: String,
-    val x3: String,
-    val x4: String,
-    val x5: String,
+    val status: String,
+    val name: String,
+    val valueOne: String,
+    val valueTwo: String,
+    val valueThree: String,
+    val valueFour: String,
     val x6: Int,
-    val x7: String
+    val date: String
 )
